@@ -29,9 +29,9 @@ class FallsClassifier(Resource):
         
         prediction = model.predict(X)[0]
         
-        if prediction == 0:
+        if prediction == 1:
             prediction = "fall"
-        elif prediction == 1:
+        elif prediction == 0:
             prediction = "not fall"
         
         # return jsonify(list(json.dumps(prediction)))
