@@ -46,9 +46,9 @@ api.add_resource(FallsClassifier, '/falls')
 if __name__ == '__main__':
     # Load model
     
-    model_name = 'decision_tree_fall_system_normalize_xyz_entropy_sklearn.pkl'
+    model_name = 'decision_tree_fall_system_updated_27mei2022_entropy_sklearn.sav'
     
-    with open('model.'+model_name, 'rb') as f:
+    with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
 
     app.run(debug=True)
