@@ -12,8 +12,7 @@ api = Api(app)
 # Create parser for the payload data
 parser = reqparse.RequestParser()
 parser.add_argument('dataset_ID')
-parser.add_argument('date_start')
-parser.add_argument('date_end')
+parser.add_argument('time')
 parser.add_argument('payload')
 
 # Define how the api will respond to the post requests
@@ -35,7 +34,7 @@ class FallsClassifier(Resource):
             prediction = "not fall"
         
         # return jsonify(list(json.dumps(prediction)))
-        response = {"response": "OK","prediction": prediction}
+        response = {"response": "OK","prediction": prediction,"time":args['time']}
         
         
         # response = {"response": "OK", "value": json.dumps(payload)}
@@ -46,7 +45,7 @@ api.add_resource(FallsClassifier, '/falls')
 if __name__ == '__main__':
     # Load model
     
-    model_name = 'decision_tree_fall_system_updated_27mei2022_entropy_sklearn.sav'
+    model_name = 'decision_tree_fall_system_kalman_filter_30mei2022_entropy_sklearn.sav'
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
