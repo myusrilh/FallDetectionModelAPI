@@ -2,9 +2,9 @@ from flask import Flask, jsonify
 from flask_restful import Api, Resource, reqparse
 # import pickle
 import joblib
-import numpy as np
-import json
 import pandas as pd
+import time,datetime
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -26,7 +26,11 @@ class FallsClassifier(Resource):
         # print(data, dataset_id)
         X = pd.DataFrame().from_dict(payload)
         
+        dt_before_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
+        # dt_before_pred = datetime.datetime.now().strftime("%A, %d %B %Y, %H:%M:%S.%f")
         prediction = model.predict(X)[0]
+        dt_after_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
+        # dt_after_pred = datetime.datetime.now().strftime("%A, %d %B %Y, %H:%M:%S.%f")
         
         if prediction == 1:
             prediction = "fall"
@@ -34,7 +38,8 @@ class FallsClassifier(Resource):
             prediction = "not fall"
         
         # return jsonify(list(json.dumps(prediction)))
-        response = {"response": "OK","prediction": prediction,"time":args['time']}
+        # response = {"response": "OK","prediction": prediction,"seconds":args['time'],"datetime":time.strftime('%A %B, %d %Y %H:%M:%S')}
+        response = {"prediction": prediction,"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
         
         
         # response = {"response": "OK", "value": json.dumps(payload)}
@@ -45,7 +50,9 @@ api.add_resource(FallsClassifier, '/falls')
 if __name__ == '__main__':
     # Load model
     
-    model_name = 'decision_tree_fall_system_kalman_filter_30mei2022_entropy_sklearn.sav'
+    # model_name = 'decision_tree_fall_system_kalman_filter_30mei2022_entropy_sklearn.sav'
+    # model_name = 'decision_tree_fall_system_kalman_filter_31mei2022_entropy_sklearn.h5'
+    model_name = 'decision_tree_fall_system_complementary_filter_2juni2022_entropy_sklearn.h5'
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
