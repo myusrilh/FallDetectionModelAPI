@@ -63,6 +63,7 @@ if __name__ == '__main__':
     # Load model
     
     model_name = 'complementary_filter_21juni2022_8labelclass.h5'
+    # model_name = 'complementary_filter_14juni2022_5labelclass.h5'
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
