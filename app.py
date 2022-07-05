@@ -3,6 +3,8 @@ from flask_restful import Api, Resource, reqparse
 import joblib
 import pandas as pd
 import time
+from datetime import datetime
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -21,39 +23,20 @@ class FallsClassifier(Resource):
         
         X = pd.DataFrame().from_dict(payload)
         
-        dt_before_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
+        # dt_before_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
+        dt_before_pred = datetime.utcnow().isoformat(sep=' ', timespec='milliseconds')
         prediction = model.predict(X)[0]
-        dt_after_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
+        dt_after_pred = datetime.utcnow().isoformat(sep=' ', timespec='milliseconds')
+        # dt_after_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
         
-        # 0 = standing
-        # 1 = walking
-        # 2 = free fall
-        # 3 = lying down
-        # 4 = wake up
-        # 5 = slowly goes down
-        # 6 = jogging
-        # 7 = wake to sit
-        # 8 = sit
-        if prediction == 0:
-            prediction = "Berdiri"
-        elif prediction == 1:
-            prediction = "Berjalan"
-        elif prediction == 2:
-            prediction = "Terjatuh!"
-        elif prediction == 3:
-            prediction = "Posisi di lantai"
-        elif prediction == 4:
-            prediction = "Bangkit"
-        elif prediction == 5:
-            prediction = "Turun perlahan"
-        elif prediction == 6:
-            prediction = "Berlari pelan"
-        elif prediction == 7:
-            prediction = "Bangkit ke posisi duduk"
-        elif prediction == 8:
-            prediction = "Duduk"
+        # if prediction == 0:
+        #     prediction = "Beraktivitas normal"
+        # elif prediction == 1:
+        #     prediction = "Terjatuh!"
+        # elif prediction == 2:
+        #     prediction = "Posisi di lantai"
         
-        response = {"prediction": prediction,"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
+        response = {"prediction": str(prediction),"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
         
         return jsonify(response)
 
@@ -62,8 +45,11 @@ api.add_resource(FallsClassifier, '/falls')
 if __name__ == '__main__':
     # Load model
     
-    model_name = 'complementary_filter_21juni2022_8labelclass.h5'
-    # model_name = 'complementary_filter_14juni2022_5labelclass.h5'
+    # model_name = 'complementary_filter_26juni2022_8labelclass.h5'
+    # model_name = 'complementary_filter_27juni2022_5labelclass.h5'
+    # model_name = 'kfall_complementary_filter_30juni2022_2label.h5'
+    model_name = 'kfall_complementary_filter_2juli2022_3label.h5'
+
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
