@@ -44,9 +44,6 @@ api.add_resource(FallsClassifier, '/falls')
 if __name__ == '__main__':
     # Load model
     
-    # model_name = 'complementary_filter_26juni2022_8labelclass.h5'
-    # model_name = 'complementary_filter_27juni2022_5labelclass.h5'
-    # model_name = 'kfall_complementary_filter_30juni2022_2label.h5'
     model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
 
     
