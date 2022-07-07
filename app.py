@@ -6,8 +6,8 @@ import time
 from datetime import datetime
 import json
 
-app = Flask(__name__)
-api = Api(app)
+fall = Flask(__name__)
+api = Api(fall)
 
 # Create parser for the payload data
 parser = reqparse.RequestParser()
@@ -25,17 +25,16 @@ class FallsClassifier(Resource):
         
         # dt_before_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
         dt_before_pred = datetime.utcnow().isoformat(sep=' ', timespec='milliseconds')
+        # dt_before_pred = time.time()*1000
+
         prediction = model.predict(X)[0]
         dt_after_pred = datetime.utcnow().isoformat(sep=' ', timespec='milliseconds')
+        # dt_after_pred = time.time()*1000
+        
         # dt_after_pred = time.strftime('%A, %d %B %Y %H:%M:%S')
         
-        # if prediction == 0:
-        #     prediction = "Beraktivitas normal"
-        # elif prediction == 1:
-        #     prediction = "Terjatuh!"
-        # elif prediction == 2:
-        #     prediction = "Posisi di lantai"
         
+        # response = {"prediction": str(prediction),"dt_before_pred":str(dt_before_pred),"dt_after_pred":str(dt_after_pred)}
         response = {"prediction": str(prediction),"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
         
         return jsonify(response)
@@ -48,10 +47,10 @@ if __name__ == '__main__':
     # model_name = 'complementary_filter_26juni2022_8labelclass.h5'
     # model_name = 'complementary_filter_27juni2022_5labelclass.h5'
     # model_name = 'kfall_complementary_filter_30juni2022_2label.h5'
-    model_name = 'kfall_complementary_filter_2juli2022_3label.h5'
+    model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
 
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
 
-    app.run(debug=True)
+    fall.run(debug=True)
