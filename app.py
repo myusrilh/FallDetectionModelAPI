@@ -37,6 +37,7 @@ class FallsClassifier(Resource):
         # response = {"prediction": str(prediction),"dt_before_pred":str(dt_before_pred),"dt_after_pred":str(dt_after_pred)}
         response = {"prediction": str(prediction),"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
         
+
         return jsonify(response)
 
 api.add_resource(FallsClassifier, '/falls')
@@ -45,7 +46,6 @@ if __name__ == '__main__':
     # Load model
     
     model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
-
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
