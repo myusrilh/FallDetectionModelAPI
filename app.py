@@ -31,7 +31,8 @@ class FallsClassifier(Resource):
 api.add_resource(FallsClassifier, '/falls')
 
 if __name__ == '__main__':
-    model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
+    # model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
+    model_name = 'kfall_complementary_filter_8juli2022_3label.h5'
     
     with open('model/'+model_name, 'rb') as f:
         model = joblib.load(f)
