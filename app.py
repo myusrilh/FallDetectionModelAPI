@@ -30,6 +30,11 @@ class FallsClassifier(Resource):
 
 api.add_resource(FallsClassifier, '/falls')
 
+@fall.route('/')
+def index():
+    # A welcome message to test our server
+    return "<h1>Welcome to our Fall detection api!</h1>"
+
 if __name__ == '__main__':
     # model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
     model_name = 'kfall_complementary_filter_8juli2022_3label.h5'
