@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api, Resource, reqparse
 import joblib
-import pandas as pd
+import pandas
 from datetime import datetime
 
 fall = Flask(__name__)
@@ -17,17 +17,15 @@ class FallsClassifier(Resource):
         args = parser.parse_args()
         payload = eval(args['payload'])
         
-        X = pd.DataFrame().from_dict(payload)
+        X = pandas.DataFrame().from_dict(payload)
         
         dt_before_pred = datetime.utcnow().isoformat(sep=' ', timespec='milliseconds')
-
         prediction = model.predict(X)[0]
         dt_after_pred = datetime.utcnow().isoformat(sep=' ', timespec='milliseconds')
         
         
-        response = {"prediction": str(prediction),"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
+        response = {"prediction":str(prediction),"dt_before_pred":dt_before_pred,"dt_after_pred":dt_after_pred}
         
-
         return jsonify(response)
 
 api.add_resource(FallsClassifier, '/falls')
