@@ -1,1 +1,1 @@
-web: gunicorn wsgi:fall
+web: gunicorn app:fall
