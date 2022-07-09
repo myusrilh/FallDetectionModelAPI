@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_restful import Api, Resource, reqparse
 import joblib
 import pandas
@@ -39,7 +39,7 @@ fall = Flask(__name__)
 @fall.route('/')
 def index():
     # A welcome message to test our server
-    return "<h1>Welcome to our Fall detection api!</h1>"
+    return render_template("index.html")
 
 if __name__ == '__main__':
     # model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
