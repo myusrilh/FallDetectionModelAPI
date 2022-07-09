@@ -34,12 +34,13 @@ class FallsClassifier(Resource):
         
         return jsonify(response)
 
-api.add_resource(FallsClassifier, '/falls')
+class Home(Resource):
+    def index():
+        # A welcome message to test our server
+        return render_template("index.html")
 
-@fall.route('/')
-def index():
-    # A welcome message to test our server
-    return render_template("index.html")
+api.add_resource(FallsClassifier, '/falls')
+api.add_resource(Home, '/')
 
 if __name__ == '__main__':
     # model_name = 'kfall_complementary_filter_7juli2022_3label.h5'
